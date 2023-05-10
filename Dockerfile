@@ -12,19 +12,9 @@ RUN mvn package
 
 #pull base image
 
-From tomcat:8.0.51-jre8-alpine
-
-RUN rm -rf /usr/local/tomcat/webapps/*
-
-#maintainer 
-MAINTAINER nauman@uog.edu.pk
-#expose port 8080
+FROM openjdk:8-jdk-alpine
 EXPOSE 8080
 
-#default command
-#CMD java -jar /data/LOGISTICS.jar
+COPY --from=maven_build /tmp/target/v1.jar /tmp/v1.jar
+ENTRYPOINT ["java","-jar","/tmp/v1.jar"]
 
-#copy hello world to docker image from builder image
-
-COPY --from=maven_build /tmp/target/v1.war /usr/local/tomcat/webapps/v1.war
-CMD ["catalina.sh","run"]
