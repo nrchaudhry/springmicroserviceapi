@@ -17,4 +17,3 @@ EXPOSE 8080
 
 COPY --from=maven_build /tmp/target/v1.jar /tmp/v1.jar
 ENTRYPOINT ["java","-jar","/tmp/v1.jar"]
-
